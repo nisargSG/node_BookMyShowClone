@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {{> bootstrap }}
+
 </head>
+
 <body>
-    <h1>Welcome to Our Website BookMyShowCline</h1>
+    <center>
+        <div class="card w-25 mt-5">
+            <div class="card-body">
+                <h5 class="card-title">Login</h5>
+                <form>
+                    <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="INPUT_EMAIL" placeholder="name@example.com" required>
+                    <label for="INPUT_EMAIL">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="INPUT_PASSWORD" placeholder="Password" required>
+                    <label for="INPUT_PASSWORD">Password</label>
+                </div>
+                <button type="submit" class="btn btn-primary" id="BTN_LOGIN">Login</button>
+                <button type="button" class="btn btn-link" id="BTN_SIGNUP">Create Account</button>
+
+                </form>
+            </div>
+        </div>
+    </center>
+
+    <script src="js/index.js"></script>
 </body>
+
 </html>
