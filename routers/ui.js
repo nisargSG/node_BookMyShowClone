@@ -1,9 +1,21 @@
 const uiRouter = require('express').Router()
 
-uiRouter.get("/",(req,res,next)=>{
+const libJWT = require('jsonwebtoken');
+
+
+uiRouter.get("/",async (req,res,next)=>{
 
     if(req.cookies.jwt_token){
-        next()
+
+        //verify cookie value - tokenvalid ????
+        try{
+            const user = await libJWT.verify(req.cookies.jwt_token,process.env.JWT_SECRET_KEY);
+            next()
+        }
+        catch(e){
+            res.redirect("/login")
+        }
+
     }
     else{
         res.redirect("/login")

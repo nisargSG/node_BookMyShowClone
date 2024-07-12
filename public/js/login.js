@@ -5,7 +5,6 @@ const inputPassword = document.getElementById("INPUT_PASSWORD")
 
 btnLogin.addEventListener('click',(e)=>{
     e.preventDefault()
-
     fetch("/api/auth",{
         method:"POST",
         headers:{'Content-Type': 'application/json'},
