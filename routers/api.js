@@ -1,24 +1,29 @@
 const apiRouter = require('express').Router()
+const { getMongoClient } = require('../utils/db')
+const libJWT = require('jsonwebtoken');
 
-const url = 'mongodb://localhost:27017';
-const dbName = 'bookmyshow';
+apiRouter.post('/auth', async (req, res) => {
 
-apiRouter.post("/auth",async (req,res)=>{
-
-    //login end point
-    client = new MongoClient(url);
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection('user');
-
-    const user = await collection.findOne({ email:req.body.email, password:req.body.password });
+    const client = getMongoClient();
+    const database = client.db();
+    const collection = database.collection('users');
+    const user = await collection.findOne({ email: req.body.email, password: req.body.password });
     if (user) {
-        res.status(200).send('Login successful');
+
+        const jwtToken = await libJWT.sign({ user }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+        res.cookie('jwt_token', jwtToken, {
+            maxAge: 3600000, // 1 hour in milliseconds
+            httpOnly: true, // cookie is accessible only by the server
+            secure: true // cookie will only be sent over HTTPS
+        });
+
+        res.status(200).json({msg:"success"})
+
+
     } else {
         res.status(401).send('Invalid email or password');
     }
-
-
 })
 
 module.exports = apiRouter
